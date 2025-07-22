@@ -3,10 +3,16 @@ let tasks = [];
 function addTask() {
   const taskInput = document.getElementById("taskInput");
   const task = taskInput.value.trim();
+  const feedback = document.getElementById("feedbackMessage");
+  feedback.textContent = "";
+
   if (task !== "") {
     tasks.push(task);
     taskInput.value = "";
     rendertask();
+  } else {
+    feedback.textContent = "Please enter a task.";
+    feedback.className = "text-red-500 text-center";
   }
 }
 
@@ -36,9 +42,12 @@ function rendertask() {
     checkbox.type = "checkbox";
     checkbox.className = "mr-3";
     checkbox.onchange = () => {
-      span.classList.toggle("line-through");
-      span.classList.toggle("text-gray-400");
-    };
+      if(checkbox.checked) {
+        div.classList.add("bg-green-100");
+  } else {
+    div.classList.remove("bg-green-100");
+  }
+};
 
     const span = document.createElement("span");
     span.className = "task-text text-gray-800";
@@ -60,8 +69,12 @@ function rendertask() {
 
 function sendCompletedTasks() {
   const email = document.getElementById("userEmail").value.trim();
+  const feedback = document.getElementById("feedbackMessage");
+  feedback.textContent = "";
+
   if (!email) {
-    alert("Please enter a valid email address.");
+    feedback.textContent = "Please enter a valid email address.";
+    feedback.className = "text-red-500 text-center";
     return;
   }
 
@@ -77,23 +90,25 @@ function sendCompletedTasks() {
   });
 
   if (completedTasks.length === 0) {
-    alert("Please check off at least one completed task.");
+    feedback.textContent = "Please mark at least one task as completed.";
+    feedback.className = "text-yellow-500 text-center";
     return;
   }
 
   const emailParams = {
-  email: email,            // <-- must be 'email' to match your template's {{email}}
-  message: completedTasks.join("\n"),
-};
-
+    email: email, // This must match {{email}} in EmailJS template
+    message: completedTasks.join("\n") // This must match {{message}} in template
+  };
 
   emailjs
     .send("service_lk11qpm", "template_5up9sg9", emailParams)
     .then(() => {
-      alert("Your completed tasks have been sent to your email!");
+      feedback.textContent = "✅ Completed tasks sent to your email.";
+      feedback.className = "text-green-600 text-center";
     })
     .catch((error) => {
       console.error("Email sending error:", error);
-      alert("Failed to send email. See console for details.");
+      feedback.textContent = "❌ Failed to send email. Check console for details.";
+      feedback.className = "text-red-500 text-center";
     });
 }
