@@ -95,10 +95,11 @@ function sendCompletedTasks() {
     return;
   }
 
-  const emailParams = {
-    email: email, // This must match {{email}} in EmailJS template
-    message: completedTasks.join("\n") // This must match {{message}} in template
-  };
+ const emailParams = {
+  email: email,
+  message: completedTasks.map((task, index) => `${index + 1}. ${task}`).join("\n")
+};
+
 
   emailjs
     .send("service_lk11qpm", "template_5up9sg9", emailParams)
@@ -108,7 +109,6 @@ function sendCompletedTasks() {
     })
     .catch((error) => {
       console.error("Email sending error:", error);
-      feedback.textContent = "❌ Failed to send email. Check console for details.";
-      feedback.className = "text-red-500 text-center";
+      feedback.textContent = "Please enter a valid email.";
     });
 }
