@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+<div class="bg-white shadow-lg rounded-xl p-6 w-full max-w-md">
+    <h1 class="text-2xl font-bold text-center text-gray-800 mb-4">To-do List</h1>
+
+   <div class = "flex gap-2 mb-4">
+    <input type="text" id="taskInput" placeholder="Enter A Task"
+    class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus: ring-2 focus:ring-blue-400" >
+    <button onclick="addTask()" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Add Task</button>
+   </div>
+
+   <p id="noTaskMessage" class="text-center text-gray-400">No tasks yet</p>
+    <ul id="taskList" class="space-y-2"></ul>
+
+<div class="mt-6 space-y-2">
+  <input type="email" id="userEmail" placeholder="Enter your email"
+    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">
+  
+  <button onclick="sendCompletedTasks()" class="w-full bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">
+    Send Completed Tasks
+  </button>
+</div>
+
+</div>
+
+
+<script src="main.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script>
+  // Initialize EmailJS here
+  emailjs.init('_CxE7qRaCF5uH7d9Z'); // 🔑 Your real public key
+</script>
+
+
+</body>
+</html>
